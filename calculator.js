@@ -3,12 +3,38 @@ const rl= readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+function askForOperation(callback){
+    rl.question("Enter operation (+, -, *,/):", (operation) => {
+        const validOperations = ["+", "-", "*", "/"];
+        if (!validOperations.includes(operation)) {
+            console.log("Invalid operation. Please choose +, -, *, or /.");
+            askForOperation(callback);
+            return;
+        }
+        callback(operation);
+});
+}
+function askForNumber(message,callback){
+    rl.question(message, (answer) => {
+        const number = Number(answer);
+        if (Number.isNaN(number)) {
+            console.log("Invalid input. Please enter a valid number.");
+            askForNumber(message, callback);
+            return;
+        }
+        callback(number);
+});
+}
 function calculate(){
-    rl.question("Enter First Number:", (answer) => {
-        const firstNumber = Number(answer);
-        rl.question("Enter Second Number:", (answer) => {
-            const secondNumber = Number(answer);
-            rl.question("Enter operation (+, -, *,/):", (operation) => {
+    askForNumber("Enter First Number:",(firstNumber)=>{
+    askForNumber("Enter Second Number:", (secondNumber) => { 
+            askForOperation((operation) => {
+                const validOperations = ["+", "-", "*", "/"];
+                if (!validOperations.includes(operation)) {
+                    console.log("Invalid operation. Please choose +, -, *, or /.");
+                    rl.close();
+                    return;
+                }
                 switch (operation) {
                     case "+":
                         console.log(firstNumber + secondNumber);
