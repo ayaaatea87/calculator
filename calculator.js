@@ -22,7 +22,9 @@ rl.question("Enter First Number:",(answer)=>{
                     break;
 
                 case "/":
-                    console.log(firstNumber / secondNumber);
+                    if (secondNumber===0){
+                        console.log("Error:Division by zero is not allowed");
+                    } else { console.log(firstNumber / secondNumber); }
                     break;
 
                 default:
